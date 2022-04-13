@@ -6,7 +6,7 @@
 #define PARETO_FRONT_ARCHIVE_H
 
 #include <iostream>
-#include <pareto/front.h>
+#include "front.h"
 #include <set>
 #include <vector>
 

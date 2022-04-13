@@ -5,8 +5,8 @@
 #ifndef PARETO_WITHIN_H
 #define PARETO_WITHIN_H
 
-#include <pareto/point.h>
-#include <pareto/query/query_box.h>
+#include "../point.h"
+#include "query_box.h"
 
 namespace pareto {
 

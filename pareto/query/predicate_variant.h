@@ -5,13 +5,14 @@
 #ifndef PARETO_PREDICATE_VARIANT_H
 #define PARETO_PREDICATE_VARIANT_H
 
-#include <pareto/point.h>
-#include <pareto/query/query_box.h>
-#include <pareto/query/disjoint.h>
-#include <pareto/query/intersects.h>
-#include <pareto/query/nearest.h>
-#include <pareto/query/satisfies.h>
-#include <pareto/query/within.h>
+#include "../point.h"
+#include "query_box.h"
+#include "disjoint.h"
+#include "intersects.h"
+#include "nearest.h"
+#include "satisfies.h"
+#include "within.h"
+
 
 namespace pareto {
 

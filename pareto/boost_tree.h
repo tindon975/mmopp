@@ -2,8 +2,8 @@
 #define PARETO_FRONTS_PREDICATE_TREE_H
 
 #include <boost/geometry/geometry.hpp>
-#include <pareto/point.h>
-#include <pareto/query/query_box.h>
+#include "point.h"
+#include "query/query_box.h"
 
 namespace pareto {
     /// \class R-Tree based on Boost.Geometry

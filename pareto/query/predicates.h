@@ -7,14 +7,14 @@
 
 #include <variant>
 
-#include <pareto/point.h>
-#include <pareto/query/query_box.h>
-#include <pareto/query/intersects.h>
-#include <pareto/query/within.h>
-#include <pareto/query/disjoint.h>
-#include <pareto/query/satisfies.h>
-#include <pareto/query/nearest.h>
-#include <pareto/query/predicate_variant.h>
-#include <pareto/query/predicate_list.h>
+#include "../point.h"
+#include "query_box.h"
+#include "intersects.h"
+#include "within.h"
+#include "disjoint.h"
+#include "satisfies.h"
+#include "nearest.h"
+#include "predicate_variant.h"
+#include "predicate_list.h"
 
 #endif //PARETO_FRONT_PREDICATES_H

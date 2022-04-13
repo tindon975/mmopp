@@ -19,10 +19,10 @@
 #include <tuple>
 #include <vector>
 
-#include <pareto/common/default_allocator.h>
-#include <pareto/point.h>
-#include <pareto/query/predicates.h>
-#include <pareto/query/query_box.h>
+#include "common/default_allocator.h"
+#include "point.h"
+#include "query/predicates.h"
+#include "query/query_box.h"
 
 namespace pareto {
     /// \class kd_tree

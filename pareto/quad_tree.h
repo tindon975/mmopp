@@ -17,9 +17,9 @@
 #include <sstream>
 #include <vector>
 
-#include <pareto/point.h>
-#include <pareto/query/predicates.h>
-#include <pareto/query/query_box.h>
+#include "point.h"
+#include "query/predicates.h"
+#include "query/query_box.h"
 
 namespace pareto {
     /// \class quad_tree

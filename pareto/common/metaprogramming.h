@@ -6,6 +6,7 @@
 #define PARETO_METAPROGRAMMING_H
 
 #include <cstddef>
+#include <vector>
 
 namespace pareto {
 

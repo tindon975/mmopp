@@ -5,8 +5,8 @@
 #ifndef PARETO_DISJOINT_H
 #define PARETO_DISJOINT_H
 
-#include <pareto/point.h>
-#include <pareto/query/query_box.h>
+#include "../point.h"
+#include "query_box.h"
 
 namespace pareto {
 

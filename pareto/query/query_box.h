@@ -5,7 +5,7 @@
 #ifndef PARETO_FRONT_QUERY_BOX_H
 #define PARETO_FRONT_QUERY_BOX_H
 
-#include <pareto/point.h>
+#include "../point.h"
 
 namespace pareto {
 

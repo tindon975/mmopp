@@ -10,15 +10,16 @@
 #include <random>
 #include <thread>
 
-#include <pareto/common/common.h>
-#include <pareto/common/hypervolume.h>
-#include <pareto/common/keywords.h>
-#include <pareto/common/metaprogramming.h>
 
-#include <pareto/spatial_map.h>
+#include "common/common.h"
+#include "common/hypervolume.h"
+#include "common/keywords.h"
+#include "common/metaprogramming.h"
+
+#include "spatial_map.h"
 
 #ifdef BUILD_BOOST_TREE
-#include <pareto/boost_tree.h>
+#include "boost_tree.h"
 #endif
 
 namespace pareto {

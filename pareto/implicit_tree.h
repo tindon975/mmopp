@@ -5,10 +5,10 @@
 #include <memory>
 #include <vector>
 
-#include <pareto/common/default_allocator.h>
-#include <pareto/point.h>
-#include <pareto/query/predicate_list.h>
-#include <pareto/query/query_box.h>
+#include "common/default_allocator.h"
+#include "point.h"
+#include "query/predicate_list.h"
+#include "query/query_box.h"
 
 namespace pareto {
 

@@ -18,7 +18,7 @@
 #include <boost/geometry/geometry.hpp>
 #endif
 
-#include <pareto/common/common.h>
+#include "common/common.h"
 
 namespace pareto {
 

@@ -9,8 +9,8 @@
 #include <vector>
 #include <optional>
 
-#include <pareto/point.h>
-#include <pareto/query/predicate_variant.h>
+#include "../point.h"
+#include "predicate_variant.h"
 
 namespace pareto {
 

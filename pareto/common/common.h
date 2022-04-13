@@ -5,8 +5,8 @@
 #ifndef PARETO_FRONT_COMMON_H
 #define PARETO_FRONT_COMMON_H
 
-#include <pareto/common/metaprogramming.h>
-#include <pareto/common/operators.h>
+#include "metaprogramming.h"
+#include "operators.h"
 
 namespace pareto {
     /// \brief Convert an initializer list to a vector
