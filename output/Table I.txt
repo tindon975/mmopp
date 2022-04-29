@@ -21,11 +21,11 @@ Test problem 4	Path4_6_6	61,3,7	1
 Test problem 4	Path4_7_7	65,2,9	1
 Test problem 4	Path4_8_8	77,2,7	1
 Test problem 4	Path4_9_9	81,1,9	1
-Test problem 5	Path5_1_6	97,4,10	6
-Test problem 5	Path5_7_7	101,3,12	1
-Test problem 5	Path5_8_13	105,3,10	6
-Test problem 5	Path5_14_16	111,2,12	3
-Test problem 5	Path5_17_24	161,1,21	8
+Test problem 5	Path5_1_6	125,5,15	6
+Test problem 5	Path5_7_9	131,4,17	3
+Test problem 5	Path5_10_15	147,3,16	6
+Test problem 5	Path5_16_18	153,2,18	3
+Test problem 5	Path5_19_19	171,8,14	1
 Test problem 6	Path6_1_2	31,16.1	2
 Test problem 6	Path6_3_4	41,15.6	2
 Test problem 6	Path6_5_5	51,14.8	1
