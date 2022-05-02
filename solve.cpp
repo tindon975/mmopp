@@ -131,16 +131,6 @@ public:
 enum Objective { unknown, min_path_len, min_num_red, min_num_cross, min_f };
 
 
-vector<Objective> get_default_objs(int prob_id) {
-  if (prob_id == 1) {
-    return {min_path_len, min_num_red};
-  } else if (prob_id <= 5) {
-    return {min_path_len, min_num_red, min_num_cross};
-  } else {
-    return {min_path_len, min_f};
-  }
-}
-
 Problem parse_problem(const json &data, const vector<Objective> &objs) {
   int start_x = data["START_x"].get<int>() - 1;
   int start_y = data["START_y"].get<int>() - 1;
@@ -200,51 +190,7 @@ Problem parse_problem(const json &data, const vector<Objective> &objs) {
         }
       }
       dim_c++;
-    } else if (obj == min_num_cross) {
-      for (int x = 0; x < dim_x; x++) {
-        for (int y = 0; y < dim_y; y++) {
-          if (passable[x][y]) {
-            int degree = (x > 0 && passable[x - 1][y] ? 1 : 0) +
-                         (x < dim_x - 1 && passable[x + 1][y] ? 1 : 0) +
-                         (y > 0 && passable[x][y - 1] ? 1 : 0) +
-                         (y < dim_y - 1 && passable[x][y + 1] ? 1 : 0);
-            if (degree >= 3) {
-              cost_matrix[x][y].push_back(1);
-            } else {
-              cost_matrix[x][y].push_back(0);
-            }
-          }
-        }
-      }
-      dim_c++;
-    } else if (obj == min_f) {
-      auto F = data["F"].get<Matrix<double>>();
-      int dim_f = (int)F[0].size() - 2;
-      map<pair<int, int>, vector<double>> F_MAP;
-      for (const vector<double> &row : F) {
-        F_MAP[{lround(row[0]), lround(row[1])}] =
-            vector<double>(row.begin() + 2, row.end());
-      }
-      for (int x = 0; x < dim_x; x++) {
-        for (int y = 0; y < dim_y; y++) {
-          if (passable[x][y]) {
-            if (auto it = F_MAP.find({x + 1, y + 1}); it != F_MAP.end()) {
-              for (double f : it->second) {
-                cost_matrix[x][y].push_back(round(f * 10));
-              }
-            } else {
-              for (int f = 0; f < dim_f; f++) {
-                cost_matrix[x][y].push_back(0);
-              }
-            }
-          }
-        }
-      }
-      for (int f = 0; f < dim_f; f++) {
-        factors.emplace_back(dim_c, 10);
-        dim_c++;
-      }
-    }
+    } 
   }
 
   return {start_x,
@@ -268,7 +214,7 @@ Problem get_problem(int prob_id) {
   ifs >> data;
   ifs.close();
 
-  vector<Objective> objs = get_default_objs(prob_id);
+  vector<Objective> objs = {min_path_len, min_num_red};
 
   return parse_problem(data, objs);
 }
@@ -335,10 +281,6 @@ public:
   [[nodiscard]] vector<Group> solve(const Problem &prob) const override {
     const auto &[start_x, start_y, goal_x, goal_y, dim_x, dim_y, dim_k, dim_c,
                  passable, key_list, key_matrix, cost_matrix, factors] = prob;
-
-#ifdef PRINT_LOG
-    auto time_point_0 = chrono::high_resolution_clock::now();
-#endif
 
     /*
      * Map Reduction
@@ -819,26 +761,6 @@ public:
   }
 };
 
-shared_ptr<BaseSolver> get_solver(const Problem &prob) {
-  switch (prob.dim_c) {
-  case 1:
-    return make_shared<Solver<1>>();
-  case 2:
-    return make_shared<Solver<2>>();
-  case 3:
-    return make_shared<Solver<3>>();
-  case 4:
-    return make_shared<Solver<4>>();
-  case 5:
-    return make_shared<Solver<5>>();
-  case 6:
-    return make_shared<Solver<6>>();
-  case 7:
-    return make_shared<Solver<7>>();
-  default:
-    return make_shared<Solver<0>>();
-  }
-}
 
 
 void run() {
@@ -846,7 +768,7 @@ void run() {
   
   for (int prob_id = 1; prob_id <= 12; prob_id++) {
     Problem prob = get_problem(prob_id);
-    shared_ptr<BaseSolver> solver = get_solver(prob);
+  
 
 #ifdef PRINT_LOG
     auto [num_areas, num_links] = prob.size();
@@ -855,7 +777,7 @@ void run() {
          << endl;
 #endif
 
-
+    shared_ptr<BaseSolver> solver = make_shared<Solver<2>>();
     vector<Group> groups = solver->solve(prob);
 
     solutions.push_back(move(groups));
