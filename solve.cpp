@@ -130,19 +130,6 @@ public:
 
 enum Objective { unknown, min_path_len, min_num_red, min_num_cross, min_f };
 
-Objective parse_objective(const string &obj) {
-  if (obj == "min_path_len") {
-    return min_path_len;
-  } else if (obj == "min_num_red") {
-    return min_num_red;
-  } else if (obj == "min_num_cross") {
-    return min_num_cross;
-  } else if (obj == "min_f") {
-    return min_f;
-  } else {
-    return unknown;
-  }
-}
 
 vector<Objective> get_default_objs(int prob_id) {
   if (prob_id == 1) {
@@ -275,7 +262,7 @@ Problem parse_problem(const json &data, const vector<Objective> &objs) {
           move(factors)};
 }
 
-Problem get_default_problem(int prob_id) {
+Problem get_problem(int prob_id) {
   json data;
   ifstream ifs("data/Problem_" + to_string(prob_id) + ".json");
   ifs >> data;
@@ -286,22 +273,7 @@ Problem get_default_problem(int prob_id) {
   return parse_problem(data, objs);
 }
 
-Problem get_problem(const string &file, const vector<string> &args) {
-  json data;
-  ifstream ifs(file);
-  ifs >> data;
-  ifs.close();
 
-  vector<Objective> objs;
-  for (const string &arg : args) {
-    Objective obj = parse_objective(arg);
-    if (obj != unknown) {
-      objs.push_back(obj);
-    }
-  }
-
-  return parse_problem(data, objs);
-}
 
 class BaseSolver {
 public:
@@ -868,44 +840,12 @@ shared_ptr<BaseSolver> get_solver(const Problem &prob) {
   }
 }
 
-void run_t0() {
-#ifdef PRINT_LOG
-  auto start_t0 = chrono::high_resolution_clock::now();
-#endif
-  double x = 0.55;
-  for (int i = 1; i <= 1000000; i++) {
-    x = x + x;
-    x = x / 2;
-    x = x * x;
-    x = sqrt(x);
-    x = log(x);
-    x = exp(x);
-    x = x / (x + 2);
-  }
-#ifdef PRINT_LOG
-  auto end_t0 = chrono::high_resolution_clock::now();
-  cout << "\t"
-       << "CPU Test ["
-       << chrono::duration<double>(end_t0 - start_t0).count() * 1000 << "ms]"
-       << endl;
-#endif
-}
 
-void run_benchmark() {
+void run() {
   vector<vector<Group>> solutions = {{}};
-
-  auto start_t0 = chrono::high_resolution_clock::now();
-  run_t0();
-  auto end_t0 = chrono::high_resolution_clock::now();
-  double t0 = chrono::duration<double>(end_t0 - start_t0).count();
-#ifdef PRINT_LOG
-  cout << "T0 = " << t0 * 1000 << "ms" << endl;
-#endif
-
-  vector<double> runtimes = {t0};
-
+  
   for (int prob_id = 1; prob_id <= 12; prob_id++) {
-    Problem prob = get_default_problem(prob_id);
+    Problem prob = get_problem(prob_id);
     shared_ptr<BaseSolver> solver = get_solver(prob);
 
 #ifdef PRINT_LOG
@@ -915,26 +855,16 @@ void run_benchmark() {
          << endl;
 #endif
 
-    auto start_time = chrono::high_resolution_clock::now();
-    vector<Group> groups = solver->solve(prob);
-    auto end_time = chrono::high_resolution_clock::now();
-    double runtime = chrono::duration<double>(end_time - start_time).count();
 
-#ifdef PRINT_LOG
-    cout << "T" << prob_id << " = " << runtime * 1000 << "ms, T" << prob_id
-         << "/T0 = " << runtime / t0 << endl;
-#endif
+    vector<Group> groups = solver->solve(prob);
 
     solutions.push_back(move(groups));
-    runtimes.push_back(runtime);
   }
 
   vector<string> roman = {"I",    "II", "III", "IV", "V",   "VI",   "VII",
                           "VIII", "IX", "X",   "XI", "XII", "XIII", "XIV"};
 
-  /*
-   * Table I
-   */
+  
   ofstream table_first("output/Table " + roman[0] + ".txt");
   table_first << "The test problem"
               << "\t"
@@ -1001,137 +931,9 @@ void run_benchmark() {
     table.close();
   }
 
-  /*
-   * Table XIV
-   */
-  ofstream table_last("output/Table " + roman[13] + ".txt");
-  table_last << "T0";
-  for (int prob_id = 1; prob_id <= 12; prob_id++) {
-    table_last << "\t"
-               << "T" << prob_id << "/"
-               << "T0";
-  }
-  table_last << endl;
+}  
 
-  table_last << runtimes[0];
-  cout << "T0 = " << runtimes[0] << endl;
-  for (int prob_id = 1; prob_id <= 12; prob_id++) {
-    table_last << "\t" << runtimes[prob_id] / runtimes[0];
-    cout << "T" << prob_id << " = " << runtimes[prob_id] << endl;
-  }
-  table_last << endl;
-
-  table_last.close();
-}
-
-void run_instance(const string &file, const vector<string> &obj_vector) {
-  auto start_t0 = chrono::high_resolution_clock::now();
-  run_t0();
-  auto end_t0 = chrono::high_resolution_clock::now();
-  double t0 = chrono::duration<double>(end_t0 - start_t0).count();
-#ifdef PRINT_LOG
-  cout << "T0 = " << t0 * 1000 << "ms" << endl;
-#endif
-
-  Problem prob = get_problem(file, obj_vector);
-  auto solver = get_solver(prob);
-#ifdef PRINT_LOG
-  auto [num_areas, num_links] = prob.size();
-  cout << "Problem (" << prob.dim_x << "x" << prob.dim_y << "): " << num_areas
-       << " Nodes, " << num_links / 2 << " Edges" << endl;
-#endif
-  auto start_time = chrono::high_resolution_clock::now();
-  vector<Group> groups = solver->solve(prob);
-  auto end_time = chrono::high_resolution_clock::now();
-  double runtime = chrono::duration<double>(end_time - start_time).count();
-#ifdef PRINT_LOG
-  cout << "T = " << runtime * 1000 << "ms (" << runtime / t0 << ")" << endl;
-#endif
-
-  /*
-   * Result I
-   */
-  ofstream table_first("output/Result I.txt");
-  table_first << "The test Problem"
-              << "\t"
-              << "The pareto optimal paths"
-              << "\t"
-              << "The Objective values"
-              << "\t"
-              << "Number of paths" << endl;
-
-  int prev_path_id = 0;
-  for (const auto &[obj_cost, paths] : groups) {
-    table_first << "Test Problem"
-                << "\t";
-    table_first << "Path_" << prev_path_id + 1 << "_"
-                << prev_path_id + paths.size() << "\t";
-    for (int i = 0; i < obj_cost.size(); i++) {
-      table_first << obj_cost[i] << (i < obj_cost.size() - 1 ? "," : "\t");
-    }
-    table_first << paths.size() << endl;
-    prev_path_id += (int)paths.size();
-  }
-
-  table_first.close();
-
-  /*
-   * Result II
-   */
-
-  ofstream table("output/Result II.txt");
-  int max_len = 0;
-
-  int path_id = 0;
-  for (const auto &[obj_cost, paths] : groups) {
-    for (const Path &path : paths) {
-      if (max_len < path.size()) {
-        max_len = (int)path.size();
-      }
-      path_id++;
-      table << (path_id == 1 ? "" : "\t");
-      table << "Path_" << path_id << "(x)";
-      table << "\t";
-      table << "Path_" << path_id << "(y)";
-    }
-  }
-  table << endl;
-
-  for (int i = 0; i < max_len; i++) {
-    path_id = 0;
-    for (const auto &[obj_cost, paths] : groups) {
-      for (const Path &path : paths) {
-        auto [x, y] = path[i];
-        path_id++;
-        table << (path_id == 1 ? "" : "\t");
-        table << (i < path.size() ? x + 1 : 0);
-        table << "\t";
-        table << (i < path.size() ? y + 1 : 0);
-      }
-    }
-    table << endl;
-  }
-
-  table.close();
-
-  /*
-   * Result III
-   */
-  ofstream table_last("output/Result III.txt");
-  table_last << "T0"
-             << "\t"
-             << "T/T0" << endl;
-
-  table_last << t0 << "\t" << runtime / t0 << endl;
-
-  table_last.close();
-}
-
-int main(int argc, char **argv) {
-  if (argc == 1) {
-    run_benchmark();
-  } else {
-    run_instance(argv[1], vector<string>(argv + 2, argv + argc));
-  }
+int main() {
+  run();
   return 0;
 }
