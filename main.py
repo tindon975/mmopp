@@ -58,15 +58,15 @@ class MapCanvas(FigureCanvas):
             yellow_areas = problem['Yellow_areas']
 
 
-        obstacle_x = []
-        obstacle_y = []
+        pass_x = []
+        pass_y = []
         dim_x = len(map[0])
         dim_y = len(map)
         for i in range(dim_y):
             for j in range(dim_x):
-                if map[i][j] == 1:
-                    obstacle_x.append(j + 1)
-                    obstacle_y.append(i + 1)
+                if map[i][j] == 0:
+                    pass_x.append(j + 1)
+                    pass_y.append(i + 1)
         yellow_areas_x = []
         yellow_areas_y = []
         for i in range(len(yellow_areas)):
@@ -106,9 +106,9 @@ class MapCanvas(FigureCanvas):
         size = 20
         plt.grid(True)  
         plt.plot(path_x,path_y,linewidth=2)
+        plt.scatter(pass_x, pass_y,s=size,c='c',marker='s')
         plt.scatter(start_x, start_y, s=size,c='b',marker='s')
-        plt.scatter(obstacle_x, obstacle_y,s=size,c='k',marker='s')
-        plt.scatter(goal_x, goal_y,s=size,c='g',marker='s')
+        plt.scatter(goal_x, goal_y,s=size,c='b',marker='s')
         plt.scatter(yellow_areas_x, yellow_areas_y,s=size,c='k',marker='s')
         plt.scatter(red_areas_x, red_areas_y,s=size,c='r',marker='s')
         self.draw()
