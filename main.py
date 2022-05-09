@@ -89,7 +89,7 @@ class MapCanvas(FigureCanvas):
             if first:
                 first = False
                 continue
-            if path_choice == 1:
+            if path_choice == 0:
                 path_id = 0
             else :
                 path_id = -1
@@ -103,7 +103,7 @@ class MapCanvas(FigureCanvas):
         ax = plt.gca()
         ax.axes.xaxis.set_visible(False)
         ax.axes.yaxis.set_visible(False)
-        size = 10
+        size = 20
         plt.grid(True)  
         plt.plot(path_x,path_y,linewidth=2)
         plt.scatter(start_x, start_y, s=size,c='b',marker='s')
