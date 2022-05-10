@@ -1,11 +1,8 @@
 The test problem	The pareto optimal paths	The objective values	Number of paths
-Test problem 1	Path1_1_6	31,0	6
-Test problem 2	Path2_1_42	41,0	42
-Test problem 3	Path3_1_199	51,0	199
-Test problem 4	Path4_1_10	51,4	10
-Test problem 4	Path4_11_12	55,3	2
-Test problem 4	Path4_13_13	65,2	1
-Test problem 4	Path4_14_14	81,1	1
+Test problem 1	Path1_1_1	1,0	1
+Test problem 2	Path2_1_1	1,0	1
+Test problem 3	Path3_1_1	1,0	1
+Test problem 4	Path4_1_1	1,0	1
 Test problem 5	Path5_1_168	195,9	168
 Test problem 5	Path5_169_324	201,8	156
 Test problem 5	Path5_325_360	207,7	36
@@ -13,10 +10,10 @@ Test problem 5	Path5_361_516	223,6	156
 Test problem 5	Path5_517_552	229,5	36
 Test problem 5	Path5_553_597	251,4	45
 Test problem 5	Path5_598_693	285,3	96
-Test problem 6	Path6_1_6	31,0	6
-Test problem 7	Path7_1_42	41,0	42
-Test problem 8	Path8_1_199	51,0	199
-Test problem 9	Path9_1_75	51,0	75
-Test problem 10	Path10_1_1997	97,0	1997
-Test problem 11	Path11_1_5	41,0	5
-Test problem 12	Path12_1_18	51,0	18
+Test problem 6	Path6_1_1	1,0	1
+Test problem 7	Path7_1_1	1,0	1
+Test problem 8	Path8_1_1	1,0	1
+Test problem 9	Path9_1_1	1,0	1
+Test problem 10	Path10_1_1	1,0	1
+Test problem 11	Path11_1_25	63,0	25
+Test problem 12	Path12_1_120	75,0	120

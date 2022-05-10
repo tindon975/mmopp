@@ -106,15 +106,15 @@ class MapCanvas(FigureCanvas):
         ax = plt.gca()
         ax.axes.xaxis.set_visible(False)
         ax.axes.yaxis.set_visible(False)
-        #fig = plt.figure()
-        #fig.set(alpha = 0.2)
-        #fig.tight_layout()
+        for i in range(len(path_x) - 1):
+            ax.annotate("",
+                    xy=(path_x[i + 1], path_y[i + 1]),
+                    xytext=(path_x[i], path_y[i]),
+                    arrowprops=dict(arrowstyle="->", color="b"))
 
         size = 20
-        plt.plot(path_x,path_y,linewidth=2)
         plt.scatter(pass_x, pass_y,s=size,c='c',marker='s')
         plt.scatter(start_x, start_y, s=size,c='b',marker='s')
-        plt.scatter(goal_x, goal_y,s=size,c='b',marker='s')
         plt.scatter(yellow_areas_x, yellow_areas_y,s=size,c='k',marker='s')
         plt.scatter(red_areas_x, red_areas_y,s=size,c='r',marker='s')
 
