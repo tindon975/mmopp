@@ -40,7 +40,7 @@ class MapCanvas(FigureCanvas):
         path_choice = int(ui.lineEdit_2.text())
         if problem_id >= 1 and problem_id <= 12 and path_choice >= 0 and path_choice <= 1:
             time = self.plot(problem_id, path_choice)
-        ui.lineEdit_3.setText(f"cost {time}s")
+        ui.lineEdit_3.setText(f"cost {time}min")
     
     def plot(self, problem_id, path_choice):
         with open(f"./data/Problem_{problem_id}.json",'r') as load_f:
