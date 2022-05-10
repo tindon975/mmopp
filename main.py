@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 
 
 
+
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
         # Configure window
@@ -18,7 +19,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.ui.setupUi(self)
 
         # Add the map widget to the empty 'frame_plot' frame
-        self.map = MapCanvas(self, self.ui.frame_plot.width()/10, self.ui.frame_plot.height()/10)
+        self.map = MapCanvas(self)
         self.ui.frame_plot.layout().addWidget(self.map)
 
         # Connect signals and slots
@@ -100,17 +101,23 @@ class MapCanvas(FigureCanvas):
             path_y.append(y)
 
         plt.cla()
+        
+        plt.gca().set_aspect("equal")
         ax = plt.gca()
         ax.axes.xaxis.set_visible(False)
         ax.axes.yaxis.set_visible(False)
+        #fig = plt.figure()
+        #fig.set(alpha = 0.2)
+        #fig.tight_layout()
+
         size = 20
-        plt.grid(True)  
         plt.plot(path_x,path_y,linewidth=2)
         plt.scatter(pass_x, pass_y,s=size,c='c',marker='s')
         plt.scatter(start_x, start_y, s=size,c='b',marker='s')
         plt.scatter(goal_x, goal_y,s=size,c='b',marker='s')
         plt.scatter(yellow_areas_x, yellow_areas_y,s=size,c='k',marker='s')
         plt.scatter(red_areas_x, red_areas_y,s=size,c='r',marker='s')
+
         self.draw()
         self.flush_events()
 
