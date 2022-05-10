@@ -768,7 +768,6 @@ void run() {
   
   for (int prob_id = 1; prob_id <= 12; prob_id++) {
     Problem prob = get_problem(prob_id);
-  
 
 #ifdef PRINT_LOG
     auto [num_areas, num_links] = prob.size();
