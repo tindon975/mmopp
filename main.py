@@ -39,8 +39,9 @@ class MapCanvas(FigureCanvas):
         problem_id = int(ui.lineEdit.text())
         path_choice = int(ui.lineEdit_2.text())
         if problem_id >= 1 and problem_id <= 12 and path_choice >= 0 and path_choice <= 1:
-            time = self.plot(problem_id, path_choice)
-        ui.lineEdit_3.setText(f"cost {time}min")
+            time, cost = self.plot(problem_id, path_choice)
+        ui.lineEdit_3.setText(f"时间：{time}")
+        ui.lineEdit_4.setText(f"成本：{cost}")
     
     def plot(self, problem_id, path_choice):
         with open(f"./data/Problem_{problem_id}.json",'r') as load_f:
@@ -87,6 +88,7 @@ class MapCanvas(FigureCanvas):
         path_y = []
         first = True
         time = 0
+        cost = 0
         for line in open(f"./output/Table {id_result[problem_id]}.txt"): 
             line = line.split()
             if first:
@@ -101,9 +103,10 @@ class MapCanvas(FigureCanvas):
                 continue
             for i in range(len(red_areas_x)):
                 if x == red_areas_x[i] and y == red_areas_y[i]:
-                    time += 4
+                    time += 9
                     break
             time += 1
+            cost += 1
             path_x.append(x)
             path_y.append(y)
 
@@ -128,7 +131,7 @@ class MapCanvas(FigureCanvas):
         self.draw()
         self.flush_events()
         
-        return time
+        return time, cost
 
 
 
