@@ -123,10 +123,17 @@ class MapCanvas(FigureCanvas):
                     arrowprops=dict(arrowstyle="->", color="b"))
 
         size = 20
-        plt.scatter(pass_x, pass_y,s=size,c='c',marker='s')
-        plt.scatter(start_x, start_y, s=size,c='b',marker='s')
-        plt.scatter(yellow_areas_x, yellow_areas_y,s=size,c='k',marker='s')
-        plt.scatter(red_areas_x, red_areas_y,s=size,c='r',marker='s')
+        plt.scatter(pass_x, pass_y,s=size,c='c',marker='s', label='可通行区域')
+        plt.scatter(start_x, start_y, s=size,c='b',marker='s', label='配送站')
+        plt.scatter(yellow_areas_x, yellow_areas_y,s=size,c='k',marker='s', label='客户')
+        plt.scatter(red_areas_x, red_areas_y,s=size,c='r',marker='s', label='堵塞区域')
+        plt.annotate(r'$start$',xy=(start_x, start_y),xytext=(+30,-30),textcoords='offset points',fontsize=16,
+             arrowprops=dict(arrowstyle='->',connectionstyle='arc3,rad=.2'))
+        for i in range(len(yellow_areas_x)):
+            plt.annotate(r'$customer$',xy=(yellow_areas_x[i], yellow_areas_y[i]),xytext=(+30,-30),textcoords='offset points',fontsize=16,
+             arrowprops=dict(arrowstyle='->',connectionstyle='arc3,rad=.2'))
+
+
 
         self.draw()
         self.flush_events()
