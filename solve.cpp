@@ -129,6 +129,7 @@ public:
 
 enum Objective { unknown, min_path_len, min_num_red, min_num_cross, min_f };
 
+int proid = 1;
 
 Problem parse_problem(const json &data, const vector<Objective> &objs) {
   int start_x = data["START_x"].get<int>() - 1;
@@ -313,7 +314,15 @@ public:
         }
       }
     }
-
+  vector<string> romans = {"I",    "II", "III", "IV", "V",   "VI",   "VII",
+                          "VIII", "IX", "X",   "XI", "XII", "XIII", "XIV"};
+  ofstream table("output/Map " + romans[proid] + ".txt");
+  for (int x = 0; x < dim_x; x ++ )
+    for(int y = 0; y < dim_y; y ++ ) {
+      if (retained[x][y]) table << "0";
+      else table << "1";
+    }
+  proid ++ ;
 #ifdef PRINT_LOG
     auto [num_areas, num_links] = prob.size(retained);
     auto time_point_1 = chrono::high_resolution_clock::now();

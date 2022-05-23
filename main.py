@@ -103,7 +103,7 @@ class MapCanvas(FigureCanvas):
                 continue
             for i in range(len(red_areas_x)):
                 if x == red_areas_x[i] and y == red_areas_y[i]:
-                    time += 9
+                    time += 49
                     break
             time += 1
             cost += 1
