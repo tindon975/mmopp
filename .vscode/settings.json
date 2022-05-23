@@ -3,6 +3,7 @@
         "algorithm": "cpp",
         "vector": "cpp",
         "memory": "cpp",
-        "numeric": "cpp"
+        "numeric": "cpp",
+        "chrono": "cpp"
     }
 }

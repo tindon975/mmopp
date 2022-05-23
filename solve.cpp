@@ -28,8 +28,7 @@ using namespace nlohmann;
 using namespace pareto;
 
 using namespace std;
-
-//#define PRINT_LOG
+#define PRINT_LOG
 
 #define within(x, y, X, Y) ((x) >= (0) && (x) < (X) && (y) >= (0) && (y) < (Y))
 
@@ -74,7 +73,7 @@ public:
     return {num_areas, num_links};
   }
 
-  [[nodiscard]] Matrix<bool> reduce() const {
+  [[nodiscard]] Matrix<bool> reduce() const{ 
     Matrix<int> depth(dim_x, vector<int>(dim_y, 0));
     Matrix<int> low(dim_x, vector<int>(dim_y, 0));
     Matrix<bool> flag(dim_x, vector<bool>(dim_y, false));
@@ -123,7 +122,7 @@ public:
       build_tree(start_x, start_y, 1);
       trim_tree(start_x, start_y);
     }
-
+    
     return retained;
   }
 };
@@ -320,7 +319,6 @@ public:
     auto time_point_1 = chrono::high_resolution_clock::now();
     cout << "\t"
          << "Map Reduction ["
-         << chrono::duration<double>(time_point_1 - time_point_0).count() * 1000
          << "ms]: " << num_areas << " Nodes, " << num_links / 2 << " Edges"
          << endl;
 #endif
@@ -411,7 +409,6 @@ public:
     auto time_point_2 = chrono::high_resolution_clock::now();
     cout << "\t"
          << "Graph Model ["
-         << chrono::duration<double>(time_point_2 - time_point_1).count() * 1000
          << "ms]: " << dim_n << " Nodes, " << edges.size() / 2 << " Edges"
          << endl;
 #endif
@@ -689,7 +686,6 @@ public:
 
     cout << "\t"
          << "Best-First Search ["
-         << chrono::duration<double>(time_point_3 - time_point_2).count() * 1000
          << "ms]: " << iteration << " Iterations" << endl;
 #endif
 
@@ -747,13 +743,11 @@ public:
 
     cout << "\t"
          << "Path Construction ["
-         << chrono::duration<double>(time_point_4 - time_point_3).count() * 1000
          << "ms]: " << groups.size() << " Points, " << num_paths << " Paths"
          << endl;
 
     cout << "\t"
          << "Total Time ["
-         << chrono::duration<double>(time_point_4 - time_point_0).count() * 1000
          << "ms]" << endl;
 #endif
 
@@ -768,7 +762,7 @@ void run() {
   
   for (int prob_id = 1; prob_id <= 12; prob_id++) {
     Problem prob = get_problem(prob_id);
-
+    auto time_point_1 = chrono::high_resolution_clock::now();
 #ifdef PRINT_LOG
     auto [num_areas, num_links] = prob.size();
     cout << "Problem " << prob_id << " (" << prob.dim_x << "×" << prob.dim_y
@@ -778,7 +772,9 @@ void run() {
 
     shared_ptr<BaseSolver> solver = make_shared<Solver<2>>();
     vector<Group> groups = solver->solve(prob);
-
+    auto time_point_2 = chrono::high_resolution_clock::now();
+    printf("problem%d花费时间:", prob_id);
+    cout << chrono::duration<double>(time_point_2 - time_point_1).count() * 1000 << endl;
     solutions.push_back(move(groups));
   }
 
