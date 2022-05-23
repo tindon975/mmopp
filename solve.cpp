@@ -302,25 +302,23 @@ public:
 #endif
       return {};
     }
-
+  vector<string> romans = {"I",    "II", "III", "IV", "V",   "VI",   "VII",
+                          "VIII", "IX", "X",   "XI", "XII", "XIII", "XIV"};
+  ofstream table("output/Map " + romans[proid] + ".txt");
     Matrix<int> degree_matrix(dim_x, vector<int>(dim_y, 0));
     for (int x = 0; x < dim_x; x++) {
       for (int y = 0; y < dim_y; y++) {
         if (retained[x][y]) {
+          table << '0';
+          printf("0");
           degree_matrix[x][y] = (x > 0 && retained[x - 1][y] ? 1 : 0) +
                                 (x < dim_x - 1 && retained[x + 1][y] ? 1 : 0) +
                                 (y > 0 && retained[x][y - 1] ? 1 : 0) +
                                 (y < dim_y - 1 && retained[x][y + 1] ? 1 : 0);
         }
+        else table << '1', printf("1");
       }
-    }
-  vector<string> romans = {"I",    "II", "III", "IV", "V",   "VI",   "VII",
-                          "VIII", "IX", "X",   "XI", "XII", "XIII", "XIV"};
-  ofstream table("output/Map " + romans[proid] + ".txt");
-  for (int x = 0; x < dim_x; x ++ )
-    for(int y = 0; y < dim_y; y ++ ) {
-      if (retained[x][y]) table << "0";
-      else table << "1";
+      table << endl;
     }
   proid ++ ;
 #ifdef PRINT_LOG

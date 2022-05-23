@@ -61,15 +61,21 @@ class MapCanvas(FigureCanvas):
             yellow_areas = problem['Yellow_areas']
 
 
+        id_result = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII','XIII']
+
         pass_x = []
         pass_y = []
         dim_x = len(map[0])
         dim_y = len(map)
-        for i in range(dim_y):
-            for j in range(dim_x):
-                if map[i][j] == 0:
-                    pass_x.append(j + 1)
-                    pass_y.append(i + 1)
+        i = -1
+        for line in open(f"./output/Map {id_result[problem_id]}.txt"):
+            i += 1
+            print(len(line), dim_y)
+            for j in range(dim_y):
+                if line[j] == '0':
+                    pass_x.append(i + 1)
+                    pass_y.append(j + 1)
+
         yellow_areas_x = []
         yellow_areas_y = []
         for i in range(len(yellow_areas)):
@@ -82,8 +88,6 @@ class MapCanvas(FigureCanvas):
             red_areas_x.append(red_areas[i][0])
             red_areas_y.append(red_areas[i][1])
             
-
-        id_result = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII','XIII']
         path_x = []
         path_y = []
         first = True
