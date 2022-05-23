@@ -70,7 +70,6 @@ class MapCanvas(FigureCanvas):
         i = -1
         for line in open(f"./output/Map {id_result[problem_id]}.txt"):
             i += 1
-            print(len(line), dim_y)
             for j in range(dim_y):
                 if line[j] == '0':
                     pass_x.append(i + 1)
@@ -118,8 +117,8 @@ class MapCanvas(FigureCanvas):
         
         plt.gca().set_aspect("equal")
         ax = plt.gca()
-        ax.axes.xaxis.set_visible(False)
-        ax.axes.yaxis.set_visible(False)
+        #ax.axes.xaxis.set_visible(False)
+        #ax.axes.yaxis.set_visible(False)
         for i in range(len(path_x) - 1):
             ax.annotate("",
                     xy=(path_x[i + 1], path_y[i + 1]),
